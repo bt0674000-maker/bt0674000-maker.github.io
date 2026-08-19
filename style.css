@@ -291,12 +291,28 @@ footer .heart { color: var(--accent-cool); animation: heartbeat 1.8s ease-in-out
     align-items: center; justify-content: center;
     transition: opacity 1.6s ease, visibility 1.6s ease;
     overflow: hidden;
+    animation: introFadeIn 1.4s ease both;
+}
+@keyframes introFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 .intro.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
+/* 雨夜开场背景：路灯柔光 + 深灰蓝层次，避免纯黑大框 */
 .intro-bg {
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center, #141416 0%, #0a0a0c 70%);
+    background:
+        radial-gradient(ellipse 72% 55% at 72% 8%, rgba(120, 128, 138, 0.20) 0%, rgba(120,128,138,0) 55%),
+        radial-gradient(ellipse 60% 48% at 22% 82%, rgba(90, 96, 106, 0.16) 0%, rgba(90,96,106,0) 55%),
+        radial-gradient(ellipse at center, #1b1d22 0%, #121317 48%, #08090c 100%);
+}
+/* 底部轻微渐隐的光晕，让画面更有纵深，而非纯黑一片 */
+.intro-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 55%, rgba(0,0,0,0.42) 100%);
+    pointer-events: none;
 }
 
 #introRain { position: absolute; inset: 0; }
