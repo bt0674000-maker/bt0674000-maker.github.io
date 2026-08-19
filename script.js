@@ -313,103 +313,21 @@ function saveNote() {
     setTimeout(() => { noteHint.style.color = ''; }, 2500);
 }
 
-// ================= 忧郁开场幕 =================
-const intro = document.getElementById('intro');
-const introRainCanvas = document.getElementById('introRain');
-const introCtx = introRainCanvas.getContext('2d');
-let introDrops = [];
-
-function sizeIntroRain() {
-    introRainCanvas.width = window.innerWidth;
-    introRainCanvas.height = window.innerHeight;
-}
-
-function makeIntroDrops() {
-    introDrops = [];
-    const n = Math.min(window.innerWidth / 5, 110);
-    for (let i = 0; i < n; i++) {
-        introDrops.push({
-            x: Math.random() * introRainCanvas.width,
-            y: Math.random() * introRainCanvas.height,
-            len: Math.random() * 28 + 14,
-            sp: Math.random() * 4 + 3,
-            op: Math.random() * 0.3 + 0.15
-        });
-    }
-}
-
-function drawIntroRain() {
-    introCtx.clearRect(0, 0, introRainCanvas.width, introRainCanvas.height);
-    introCtx.strokeStyle = 'rgba(205, 205, 210, 1)';
-    introCtx.lineWidth = 1;
-    introDrops.forEach(d => {
-        d.y += d.sp;
-        d.x -= 0.6;
-        introCtx.globalAlpha = d.op;
-        introCtx.beginPath();
-        introCtx.moveTo(d.x, d.y);
-        introCtx.lineTo(d.x - 2, d.y - d.len);
-        introCtx.stroke();
-        if (d.y > introRainCanvas.height) { d.y = -d.len; d.x = Math.random() * introRainCanvas.width; }
-    });
-    introCtx.globalAlpha = 1;
-    requestAnimationFrame(drawIntroRain);
-}
-
-function runIntro() {
-    // 逐行浮现
-    const l1 = document.getElementById('introLine1');
-    const l2 = document.getElementById('introLine2');
-    const l3 = document.getElementById('introLine3');
-    const fade = document.getElementById('introFade');
-    const btn = document.getElementById('introEnter');
-
-    setTimeout(() => l1.classList.add('show'), 600);
-    setTimeout(() => l2.classList.add('show'), 2200);
-    setTimeout(() => l3.classList.add('show'), 3800);
-
-    setTimeout(() => l1.classList.add('dim'), 5400);
-    setTimeout(() => l2.classList.add('dim'), 5600);
-    setTimeout(() => l3.classList.add('dim'), 5800);
-
-    // 全屏淡白，浮现进入按钮
-    setTimeout(() => fade.classList.add('show'), 7000);
-    setTimeout(() => { btn.classList.add('show'); }, 7600);
-}
-
-function enterSite() {
-    const btn = document.getElementById('introEnter');
-    // 锁定滚动
-    document.body.classList.add('intro-hidden');
-
-    // 用户点击"进入"即为手势，立即启动自动播放音乐（须在同步调用栈内，保证浏览器放行音频）
-    startMusic();
-
-    // 淡出开场幕
-    setTimeout(() => {
-        intro.classList.add('hidden');
-        document.body.classList.remove('intro-hidden');
-        // 开始主页面雨滴/粒子
-        resizeRain(); createRain(); animateRain();
-        resizeParticles(); createMotes(); animateMotes();
-    }, 300);
-}
-
-document.getElementById('introEnter').addEventListener('click', enterSite);
-
 // ================= 启动 =================
 window.addEventListener('load', () => {
-    // 开场幕下雨
-    sizeIntroRain(); makeIntroDrops(); drawIntroRain();
-    runIntro();
-    // 主页面提前初始化雨滴（在开场幕后可见）
-    sizeIntroRain(); makeIntroDrops();
+    resizeRain(); createRain(); animateRain();
+    resizeParticles(); createMotes(); animateMotes();
     typeEffect();
     loadNote();
 });
 
+// 用户首次滚动/点击/触摸页面试探自动播放音乐
+const startMusicOnGesture = () => { startMusic(); };
+window.addEventListener('click', startMusicOnGesture, { once: true });
+window.addEventListener('touchstart', startMusicOnGesture, { once: true });
+window.addEventListener('scroll', startMusicOnGesture, { once: true });
+
 window.addEventListener('resize', () => {
-    sizeIntroRain(); makeIntroDrops();
     resizeRain(); createRain();
     resizeParticles(); createMotes();
 });
