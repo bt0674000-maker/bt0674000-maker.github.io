@@ -29,13 +29,14 @@ body.loaded { opacity: 1; }
 /* 背景动效 —— 忧郁雨夜 */
 .bg-effect { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: linear-gradient(160deg, #2a2a30 0%, #1b1b20 40%, #121215 100%); }
 
-/* 伤感背景视频 —— 黑白灰 */
+/* 伤感背景视频 —— 黑白灰 + 电影冷色氛围 */
 .bg-video {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    filter: grayscale(1) brightness(0.55) contrast(1.05);
+    filter: grayscale(1) brightness(0.52) contrast(1.08) saturate(0.85);
     z-index: 0;
+    transform: scale(1.04);
 }
 
 .bg-gradient {
@@ -59,9 +60,60 @@ body.loaded { opacity: 1; }
 #particles { position: absolute; inset: 0; }
 
 .vignette {
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
+    position: absolute; inset: 0; z-index: 1;
+    background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.62) 100%);
     pointer-events: none;
+}
+
+/* 电影胶片颗粒 —— 细腻噪点，随动画轻微抖动，让画面有老电影的质感 */
+.film-grain {
+    position: absolute; inset: -20%; z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.20;
+    mix-blend-mode: overlay;
+    animation: grainShift 0.7s steps(4) infinite;
+    pointer-events: none;
+}
+@keyframes grainShift {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-2%, 2%); }
+    50% { transform: translate(2%, -2%); }
+    75% { transform: translate(-1%, -1%); }
+    100% { transform: translate(1%, 1%); }
+}
+
+/* 玻璃雨痕 —— 拟真的斜向水痕，动态滑落 */
+.rain-streaks {
+    position: absolute; inset: 0; z-index: 2;
+    overflow: hidden;
+    opacity: 0.5;
+    pointer-events: none;
+}
+.rain-streaks::before,
+.rain-streaks::after {
+    content: '';
+    position: absolute;
+    top: -30%;
+    width: 2px;
+    background: linear-gradient(to bottom, rgba(190,200,210,0) 0%, rgba(175,185,195,0.18) 40%, rgba(150,160,170,0.10) 100%);
+    filter: blur(0.5px);
+    animation: streakFall linear infinite;
+}
+.rain-streaks::before {
+    left: 18%; height: 45%;
+    animation-duration: 4.2s;
+}
+.rain-streaks::after {
+    right: 24%; height: 38%;
+    width: 1.5px;
+    animation-duration: 5.6s;
+    animation-delay: 1.8s;
+}
+@keyframes streakFall {
+    0% { transform: translateY(0) rotate(1.5deg); opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { transform: translateY(320%) rotate(1.5deg); opacity: 0; }
 }
 
 .content { position: relative; z-index: 1; }
