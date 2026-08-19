@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>雨夜心事 · Aing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 忧郁开场幕 -->
+    <div class="intro" id="intro">
+        <div class="intro-bg"></div>
+        <canvas id="introRain"></canvas>
+        <div class="intro-content">
+            <div class="intro-line" id="introLine1">下雨了。</div>
+            <div class="intro-line" id="introLine2">有些话，终究没能说出口。</div>
+            <div class="intro-line" id="introLine3">就让这场雨，替我陪着你。</div>
+            <div class="intro-fade" id="introFade"></div>
+        </div>
+        <button class="intro-enter" id="introEnter">进入 &nbsp;→</button>
+    </div>
+
+    <!-- 背景动效 -->
+    <div class="bg-effect">
+        <!-- 伤感背景视频 -->
+        <video class="bg-video" autoplay muted loop playsinline>
+            <source src="https://assets.mixkit.co/videos/4331/4331-720.mp4" type="video/mp4">
+        </video>
+        <div class="bg-gradient gradient-1"></div>
+        <div class="bg-gradient gradient-2"></div>
+        <div class="bg-gradient gradient-3"></div>
+        <canvas id="rain"></canvas>
+        <canvas id="particles"></canvas>
+        <div class="vignette"></div>
+    </div>
+
+    <!-- 音乐提示（自动播放） -->
+    <div class="music-badge" id="musicBadge">
+        <i class="fas fa-music"></i>
+        <span>♪ 雨夜钢琴</span>
+    </div>
+
+    <!-- 导航 -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#home" class="nav-logo"><i class="fas fa-feather-alt"></i> 雨夜·心事</a>
+            <button class="nav-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">首页</a></li>
+                <li><a href="#words">那些没说出口的话</a></li>
+                <li><a href="#memo">记忆</a></li>
+                <li><a href="#note">给未来的信</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <div class="content">
+        <div class="container">
+            <!-- Hero -->
+            <section class="hero" id="home">
+                <div class="hero-kicker">— 一个下雨的夜晚 —</div>
+                <div class="hero-text">
+                    <h1>我们，<span class="highlight">最终还是走散了</span></h1>
+                    <div class="typed-text" id="typedText"></div>
+                    <p class="pain-poem fade-in">
+                        有些话，最后还是没有说出口。<br>
+                        就像这场雨，下在心里，<br>
+                        从来没有 <span class="accent-line">晴天</span> 过。<br><br>
+                        原来成年人连告别，<br>
+                        都显得这么 <span class="accent-line">平静</span>。
+                    </p>
+                    <div class="hero-divider"></div>
+                    <div class="hero-owner">
+                        <span class="owner-name">AINGWANGWEI</span>
+                        <span class="owner-sub">雨夜心事 · 我的独白</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 记忆留声机 -->
+            <section class="memorial" id="words">
+                <div class="section-header fade-in">
+                    <i class="fas fa-record-vinyl"></i>
+                    <h2>那些没说出口的话 <span class="num">_thoughts</span></h2>
+                </div>
+                <div class="words-grid">
+                    <div class="word-card fade-in">
+                        <p class="quote">我们就这么走散了，没有争吵，没有告别，<span class="highlight">只是一起看过的日落</span>，再也没有下一次。</p>
+                        <div class="signature"><i class="fas fa-heart"></i> —— 就轻易走散的我们</div>
+                    </div>
+                    <div class="word-card fade-in">
+                        <p class="quote">是我先删了对话框，可也是我一直没舍得放下。你来了又走，<span class="highlight">我的心却皱成了一团</span>。</p>
+                        <div class="signature"><i class="fas fa-heart"></i> —— 某个深夜</div>
+                    </div>
+                    <div class="word-card fade-in">
+                        <p class="quote">总以为来日方长，可有的话不说，就真的没有机会说了。原来<span class="highlight">成年人连告别</span>，都那么安静。</p>
+                        <div class="signature"><i class="fas fa-heart"></i> —— 某个雨天</div>
+                    </div>
+                    <div class="word-card fade-in">
+                        <p class="quote">如果注定会错过，当初又何必让我遇见你。真心本是<span class="highlight">不可再生</span>，你却用它教会我什么叫走散。</p>
+                        <div class="signature"><i class="fas fa-heart"></i> —— 某个我又想起你的夜</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 记忆片段 -->
+            <section id="memo">
+                <div class="section-header fade-in">
+                    <i class="fas fa-camera-retro"></i>
+                    <h2>留不住的记忆 <span class="num">_memory</span></h2>
+                </div>
+                <div class="about-section">
+                    <div class="about-card fade-in">
+                        <h3><i class="fas fa-wind"></i> 相遇</h3>
+                        <p>如果我们相遇却不能在一起，我宁愿从没遇见过你。可偏偏那一眼的心动，让我惦记了那么久，久到后来成了回忆里走不出的圈。</p>
+                    </div>
+                    <div class="about-card fade-in">
+                        <h3><i class="fas fa-umbrella"></i> 相知</h3>
+                        <p>我们都在时光里跌跌撞撞地成长，然后一点点丢失最初的模样。你说过的永远，后来却成了我一个人的自言自语，连同那场一起淋过的雨。</p>
+                    </div>
+                    <div class="about-card fade-in">
+                        <h3><i class="fas fa-cloud-rain"></i> 相别</h3>
+                        <p>你就像风，我都来不及追赶，你却匿了踪迹。那一年我们觉得世界很小，如今各奔东西后才知，也许一别，就是一世。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 记事本 -->
+            <section id="note">
+                <div class="section-header fade-in">
+                    <i class="fas fa-feather"></i>
+                    <h2>给未来的信 <span class="num">_letter</span></h2>
+                </div>
+                <div class="note-card fade-in">
+                    <h3><i class="fas fa-pen-nib"></i> 有些心情，写下来，也许就放下了</h3>
+                    <textarea id="noteArea" placeholder="把想说的话，写在这里……雨季总会过去，心里的天，也一定会晴。"></textarea>
+                    <div class="note-foot">
+                        <span class="note-hint" id="noteHint">你的文字只保存在本地</span>
+                        <button class="note-save" onclick="saveNote()">保存心里话</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 结尾 -->
+            <section class="contact-section">
+                <div class="section-header fade-in">
+                    <i class="fas fa-moon"></i>
+                    <h2>致每一个深夜的你 <span class="num">_night</span></h2>
+                </div>
+                <p class="contact-text fade-in">
+                    如果你也在某个雨夜想起谁，<br>
+                    如果你也有没说出口的话，<br>
+                    答应我，<span class="accent-line">先照顾好自己</span>。<br>
+                    这场雨会停的，你也会好的。
+                </p>
+                <div class="social-buttons fade-in">
+                    <a href="#" class="social-btn" title="记录心情"><i class="fas fa-book"></i></a>
+                    <a href="#" class="social-btn" title="治愈自己"><i class="fas fa-heart"></i></a>
+                    <a href="#" class="social-btn" title="新的开始"><i class="fas fa-sun"></i></a>
+                    <a href="#" class="social-btn" title="好好生活"><i class="fas fa-coffee"></i></a>
+                </div>
+            </section>
+        </div>
+
+        <!-- 页脚 -->
+        <footer>
+            <p>© <span id="year"></span> Aing · 愿你眼里有光，心中有暖</p>
+            <p>此刻的你，正在经历一场 <span class="heart">雨</span> · 但天总会晴</p>
+        </footer>
+    </div>
+
+    <!-- 回到顶部 -->
+    <button class="back-top" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+
+    <script src="script.js"></script>
+</body>
+</html>
